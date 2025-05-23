@@ -6,9 +6,9 @@ import {
   updateUser,
   deleteUser,
   restoreUser,
-} from "../controllers/user.controller";
+} from "../../controllers/auth/user.controller";
 
-import { authenticateToken } from "../middlewares/authmiddlewares";
+import { authenticateToken } from "../../middlewares/authmiddlewares";
 
 const router: Router = Router();
 
