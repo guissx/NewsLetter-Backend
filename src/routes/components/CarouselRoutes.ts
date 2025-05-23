@@ -1,5 +1,6 @@
 import express from "express";
 import { authenticateToken } from "../../middlewares/authmiddlewares";
+import upload from "../../middlewares/upload";
 import {
   createCarousel,
   getAllCarousel,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/",authenticateToken, createCarousel);
+router.post("/",upload.single("image"),authenticateToken, createCarousel);
 router.get("/",authenticateToken, getAllCarousel);
 router.get("/:id",authenticateToken, getCarouselById);
 router.put("/:id",authenticateToken, updateCarousel);

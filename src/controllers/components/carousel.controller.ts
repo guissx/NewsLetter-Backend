@@ -4,11 +4,25 @@ import CarouselItem from "../../models/components/CarroselModel";
 
 export const createCarousel = async (req: Request, res: Response): Promise<void> => {
   try {
-    const newItem = new CarouselItem(req.body);
+    const { title, description, buttonText } = req.body;
+    const imagemUrl = (req.file as any)?.path;
+
+    if (!imagemUrl) {
+      res.status(400).json({ error: "Imagem não enviada" });
+      return;
+    }
+
+    const newItem = new CarouselItem({
+      title,
+      description,
+      image: imagemUrl,
+      buttonText
+    });
+
     const savedItem = await newItem.save();
     res.status(201).json(savedItem);
   } catch (err: any) {
-    res.status(400).json({ error: "Erro ao criar item do carrossel", details: err.message });
+    res.status(400).json({ error: "Erro ao criar item carrossel", details: err.message });
   }
 };
 

@@ -1,5 +1,6 @@
 import express from "express";
 import { authenticateToken } from "../../middlewares/authmiddlewares";
+import upload from "../../middlewares/upload";
 import {
   createNewsItem,
   getAllNewsItems,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/",authenticateToken, createNewsItem);
+router.post("/",upload.single("image"),authenticateToken, createNewsItem);
 router.get("/",authenticateToken, getAllNewsItems);
 router.get("/:id",authenticateToken, getNewsItemById);
 router.put("/:id",authenticateToken, updateNewsItem);

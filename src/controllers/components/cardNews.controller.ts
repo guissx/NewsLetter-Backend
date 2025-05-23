@@ -5,8 +5,20 @@ import NewsItem from "../../models/components/CardNewsModel"
 // Criar noticia 
 export const createNewsItem = async (req: Request, res: Response) => {
   try {
-    const newItem = new NewsItem(req.body);
-    const savedItem = await newItem.save();
+    const { title, category, excerpt } = req.body;
+    const imagemUrl = (req.file as any)?.path;
+
+    if (!imagemUrl) {
+      res.status(400).json({ error: "Imagem não enviada" });
+      return;
+    }
+    const newNews = new NewsItem({
+      title,
+      category,
+      excerpt,
+      image: imagemUrl
+    });
+    const savedItem = await newNews.save();
     res.status(201).json(savedItem);
   } catch (err: any) {
     res.status(400).json({ error: "Erro ao criar notícia", details: err.message });
