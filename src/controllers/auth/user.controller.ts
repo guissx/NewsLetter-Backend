@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import User from "../models/UserModel";
+import User from "../../models/UserModel";
 
 // GET ALL (ignora deletados)
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
