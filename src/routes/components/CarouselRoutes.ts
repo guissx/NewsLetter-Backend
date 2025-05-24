@@ -12,8 +12,8 @@ import {
 const router = express.Router();
 
 router.post("/",upload.single("image"),authenticateToken, createCarousel);
-router.get("/",authenticateToken, getAllCarousel);
-router.get("/:id",authenticateToken, getCarouselById);
+router.get("/", getAllCarousel);
+router.get("/:id", getCarouselById);
 router.put("/:id",authenticateToken, updateCarousel);
 router.delete("/:id",authenticateToken, deleteCarousel);
 

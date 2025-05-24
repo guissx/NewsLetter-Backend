@@ -12,8 +12,8 @@ import {
 const router = express.Router();
 
 router.post("/",upload.single("image"),authenticateToken, createNewsItem);
-router.get("/",authenticateToken, getAllNewsItems);
-router.get("/:id",authenticateToken, getNewsItemById);
+router.get("/", getAllNewsItems);
+router.get("/:id", getNewsItemById);
 router.put("/:id",authenticateToken, updateNewsItem);
 router.delete("/:id",authenticateToken, deleteNewsItem);
 
