@@ -50,18 +50,27 @@ export const updateCarousel = async (req: Request, res: Response): Promise<void>
   }
 
   try {
-    const updatedItem = await CarouselItem.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!updatedItem) {
-      res.status(404).json({ error: "Item não encontrado para atualização" });
+    const existingItem = await CarouselItem.findById(id);
+    if (!existingItem) {
+      res.status(404).json({ error: "Item não encontrado" });
       return;
     }
+
+    const { title, description, buttonText } = req.body;
+
+    // Se tiver uma nova imagem, atualiza. Caso contrário, mantém a antiga.
+    const image = req.file ? req.file.path : existingItem.image;
+
+    const updatedItem = await CarouselItem.findByIdAndUpdate(
+      id,
+      { title, description, buttonText, image },
+      { new: true, runValidators: true }
+    );
+
     res.status(200).json(updatedItem);
   } catch (err: any) {
-    res.status(400).json({ error: "Erro ao atualizar item", details: err.message });
+    console.error("Erro ao atualizar item:", err);
+    res.status(500).json({ error: "Erro ao atualizar item", details: err.message });
   }
 };
 
