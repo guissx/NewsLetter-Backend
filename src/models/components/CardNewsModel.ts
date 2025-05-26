@@ -14,7 +14,6 @@ const NewsItemSchema: Schema = new Schema(
     title: { type: String, required: true },
     category: { type: String, required: true },
     excerpt: { type: String, required: true },
-    timestamp: { type: Date, required: true },
   },
   {
     timestamps: true, 
