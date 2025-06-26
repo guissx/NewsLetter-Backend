@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
 
 interface JwtPayload {
   userId: string;
@@ -15,6 +14,8 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction
 ) => {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET não definido no ambiente");
   }
@@ -23,7 +24,7 @@ export const authenticateToken = (
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    res.status(401).json({ message: "Token não fornecido" })
+    res.status(401).json({ message: "Token não fornecido" });
     return;
   }
 
@@ -32,7 +33,7 @@ export const authenticateToken = (
     req.userId = decoded.userId; 
     next();
   } catch (err) {
-    res.status(403).json({ message: "Token inválido" })
+    res.status(403).json({ message: "Token inválido" });
     return;
   }
 };
